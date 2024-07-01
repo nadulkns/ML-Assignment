@@ -11,7 +11,7 @@ df.loc[:99, 'Class'] = 'C1'
 df.loc[99:199, 'Class'] = 'C2'
 
 
-# Create a separate dataframe for class C1 and C2
+# Create  separate dataframes for class C1,C2 and predicted
 df0 = df[:99]
 df1 = df[99:199]
 df2 = df[199:]
