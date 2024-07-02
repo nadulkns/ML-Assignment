@@ -10,6 +10,7 @@ df = pd.read_csv("DataSet/data3.csv")
 # create a new column and classify data as Class C1 and C2
 df.loc[:99, 'Class'] = 'C1'
 df.loc[99:199, 'Class'] = 'C2'
+df.loc[199:219, 'Class'] = ''
 
 
 # Create  separate dataframes for class C1,C2 and predicted
@@ -47,7 +48,7 @@ def knn_model(X_train, X_test, y_train, y_test, k, metric):
     knn = KNeighborsClassifier(n_neighbors=k, metric=metric)
     knn.fit(X_train, y_train)
     predict = knn.predict(X_test)
-    score = knn.score(X_test, predict)
+    score = knn.score(X_train, y_train)
 
     d = pd.DataFrame({'Sample': X_test.index, 'Prediction': predict})
     print(d)
@@ -63,7 +64,7 @@ def weighted_knn_model(X_train, X_test, y_train, y_test, k, metric, weights):
     knn = KNeighborsClassifier(n_neighbors=k, metric=metric, weights=weights)
     knn.fit(X_train, y_train)
     predict = knn.predict(X_test)
-    score = knn.score(X_test, predict)
+    score = knn.score(X_train, y_train)
 
     d = pd.DataFrame({'Sample': X_test.index, 'Prediction': predict})
     print(d)
