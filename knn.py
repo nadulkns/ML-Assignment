@@ -42,23 +42,28 @@ def plot():  # plot data in a scatter plot
 
 
 # Assign values for X and y variables
-X = df.drop(['Class'], axis='columns')
-y = df.Class
+X = df.loc[0:199].drop(['Class'], axis='columns')
+y = df.loc[0:199].Class
 
 # Train and Test data
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.09, random_state=None, shuffle=False)
-
+    X, y, test_size=0.2, random_state=None, shuffle=True)
 
 # Create KNN Model
+
+
 def knn_model(X_train, X_test, y_train, y_test, k, metric):
     knn = KNeighborsClassifier(n_neighbors=k, metric=metric)
     knn.fit(X_train, y_train)
-    predict = knn.predict(X_test)
-    score = knn.score(X_train, y_train)
+    score = knn.score(X_test, y_test)
 
-    d = pd.DataFrame({'Sample': X_test.index, 'Prediction': predict})
-    print(d)
+    # predict last 20 data points
+    prediction = df.loc[199:219].drop(['Class'], axis='columns')
+    predict = knn.predict(prediction)
+
+    dataframe = pd.DataFrame(
+        {'Sample': df.loc[199:219].index, 'Predicted Class': predict})
+    print(dataframe)
 
     print(f"\nAccuracy of Distances_type={metric} with k={k} is {score}")
     print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n")
@@ -70,11 +75,15 @@ def knn_model(X_train, X_test, y_train, y_test, k, metric):
 def weighted_knn_model(X_train, X_test, y_train, y_test, k, metric, weights):
     knn = KNeighborsClassifier(n_neighbors=k, metric=metric, weights=weights)
     knn.fit(X_train, y_train)
-    predict = knn.predict(X_test)
-    score = knn.score(X_train, y_train)
+    score = knn.score(X_test, y_test)
 
-    d = pd.DataFrame({'Sample': X_test.index, 'Prediction': predict})
-    print(d)
+    # predict last 20 data points
+    prediction = df.loc[199:219].drop(['Class'], axis='columns')
+    predict = knn.predict(prediction)
+
+    dataframe = pd.DataFrame(
+        {'Sample': df.loc[199:219].index, 'Predicted Class': predict})
+    print(dataframe)
 
     print(f"\nAccuracy of Distances_type={metric} with k={k} is {score}")
     print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n")
@@ -106,8 +115,8 @@ def c_d():  # Answers for question c and d
 
 def e():  # Answers for question e
     print("***weighted K nearest neighbor algorithm***\n")
-    weighted_knn_model(X_train, X_test, y_train,
-                       y_test, 1, 'euclidean', 'distance')
+    weighted_knn_model(X_train, X_test, y_train, y_test,
+                       1, 'euclidean', 'distance')
     weighted_knn_model(X_train, X_test, y_train, y_test,
                        3, 'euclidean', 'distance')
     main_menu()
