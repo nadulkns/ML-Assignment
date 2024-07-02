@@ -12,14 +12,14 @@ import sys
 df = pd.read_csv("DataSet/data3.csv")
 
 # create a new column and classify data as Class C1 and C2
-df.loc[:99, 'Class'] = 'C1'
-df.loc[99:199, 'Class'] = 'C2'
+df.loc[:100, 'Class'] = 'C1'
+df.loc[100:199, 'Class'] = 'C2'
 
 
 # Create  separate dataframes for class C1,C2 and predicted
-df0 = df[:99]
-df1 = df[99:199]
-df2 = df[199:]
+df0 = df[:100]
+df1 = df[100:200]
+df2 = df[200:]
 
 
 def plot():  # plot data in a scatter plot
@@ -45,13 +45,13 @@ def plot():  # plot data in a scatter plot
 X = df.loc[0:199].drop(['Class'], axis='columns')
 y = df.loc[0:199].Class
 
-# Train and Test data
+
+# Train and Test data (Test Size=0.2 & Shuffel=False)
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=None, shuffle=True)
+    X, y, test_size=0.2, random_state=None, shuffle=False)
+
 
 # Create KNN Model
-
-
 def knn_model(X_train, X_test, y_train, y_test, k, metric):
     knn = KNeighborsClassifier(n_neighbors=k, metric=metric)
     knn.fit(X_train, y_train)
@@ -63,6 +63,8 @@ def knn_model(X_train, X_test, y_train, y_test, k, metric):
 
     dataframe = pd.DataFrame(
         {'Sample': df.loc[199:219].index, 'Predicted Class': predict})
+
+    print(f"k={k} || {metric}\n")
     print(dataframe)
 
     print(f"\nAccuracy of Distances_type={metric} with k={k} is {score}")
@@ -83,6 +85,8 @@ def weighted_knn_model(X_train, X_test, y_train, y_test, k, metric, weights):
 
     dataframe = pd.DataFrame(
         {'Sample': df.loc[199:219].index, 'Predicted Class': predict})
+
+    print(f"k={k} || {metric}\n")
     print(dataframe)
 
     print(f"\nAccuracy of Distances_type={metric} with k={k} is {score}")
