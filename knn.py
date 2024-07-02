@@ -10,7 +10,6 @@ df = pd.read_csv("DataSet/data3.csv")
 # create a new column and classify data as Class C1 and C2
 df.loc[:99, 'Class'] = 'C1'
 df.loc[99:199, 'Class'] = 'C2'
-df.loc[199:219, 'Class'] = ''
 
 
 # Create  separate dataframes for class C1,C2 and predicted
