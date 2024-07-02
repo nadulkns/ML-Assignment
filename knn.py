@@ -1,3 +1,7 @@
+# Machine Learning Assignment-1
+# AS2021402
+# K.N.Sathsara
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -22,12 +26,16 @@ def plot():  # plot data in a scatter plot
     plt.xlabel('Col1')
     plt.ylabel('Col2')
     plt.title('Scatter Plot')
+
     plt.scatter(df0['Col1'], df0['Col2'], color='green',
                 marker='+', label='Class C1')
+
     plt.scatter(df1['Col1'], df1['Col2'], color='blue',
                 marker='.', label='Class C2')
+
     plt.scatter(df2['Col1'], df2['Col2'], color='red',
                 marker='*', label='to Predict')
+
     plt.legend(loc='upper left')
     plt.show()
     main_menu()
